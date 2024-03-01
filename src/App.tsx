@@ -5,86 +5,123 @@ import CircleTopRigth from "./components/CircleTopRigth";
 import CurrentFood from "./components/CurrentFood";
 import Navbar from "./components/Navbar";
 import { plats } from "./Data/foodImages";
-import { colors, angles } from "./Data/foodData";
+import { cardInfos, FoodCardProps, foodColors, foodAngles } from "./Data/foodData";
 import Footer from "./components/Footer";
+// import {calPoints} from './components/digit'
 
 const App = () => {
+  // const themeColors = foodColors;
+  // const angles = foodAngles
 
   const [image, setImage] = useState<string>(plats[0]);
-  const [rotate, setRotation] = useState<number>(0);
+  const [rotate, setRotation] = useState<string>(foodAngles[0]);
+  const [cardInfo, SetCardInfo] = useState<FoodCardProps>(cardInfos[0]);
 
-  const [themeColor, SetThemeColor] = useState<string>(colors[0]);
+  const [themeColor, SetThemeColor] = useState<string>(foodColors[0]);
 
-  useEffect(() => {
-    console.log(themeColor, image, rotate)
-  }, [image, rotate, themeColor])
+  const [showNext, setShowNextText] = useState({showNextText: false, iconClicked: ""});
+  // const [iconCliked, setIconClicked] = useState<string>('');
 
   const handleIconClick = (param: string) => {
     // handleCircleFoodRotation(param);
 
-    if (param === "iconLeft") {
-      setImage((prevState) => {
-        const prevStateId = plats.indexOf(prevState);
-        console.log("id de l'image précédente", prevStateId);
+    setShowNextText({showNextText: true, iconClicked: param});
 
-        if (prevStateId === 0) {
-          // si on est à l'image 1 et qu'on clique sur icon left la rotataion nous ramène à la dernière image
-          setRotation(angles[2]);
+    // Après un certain délai, réinitialiser showNextText à false pour afficher le texte précédent
+    setTimeout(() => {
+      setShowNextText({showNextText: false, iconClicked: param});
+    }, 300);
 
-          SetThemeColor(colors[2]);
+      if (param === "iconLeft") {
 
-          return plats[plats.length - 1];
-        } else {
-          //modifier l'angle de rotation
-          setRotation(angles[prevStateId - 1]);
-
-          SetThemeColor(colors[prevStateId - 1]);
-
-          return plats[prevStateId - 1];
-        }
-      });
-    } else if (param === "iconRigth") {
-      setImage((prevState) => {
-        const prevStateId = plats.indexOf(prevState);
-        console.log("id de l'image précédente", prevStateId);
-
-        // setRotation(angles[prevStateId]);
-        if (prevStateId === plats.length - 1) {
-          setRotation(angles[0]);
-
-          SetThemeColor(colors[0]);
-
-          return plats[0];
-        } else {
-          setRotation(angles[prevStateId + 1]);
-
-          SetThemeColor(colors[prevStateId + 1]);
-
-          return plats[prevStateId + 1];
-        }
-      });
-    }
+        setImage((prevState) => {
+          const prevStateId = plats.indexOf(prevState);
+          console.log("id de l'image précédente", prevStateId);
+  
+          if (prevStateId === 0) {
+            // si on est à l'image 1 et qu'on clique sur icon left la rotataion nous ramène à la dernière image
+           console.log(foodColors[2], 'rotation : ', foodAngles[2]);
+  
+            SetCardInfo(cardInfos[plats.length - 1]);
+            SetThemeColor(foodColors[foodColors.length - 1]);
+            setRotation(foodAngles[foodAngles.length - 1]);
+  
+            return plats[plats.length - 1];
+          } else {
+            //modifier l'angle de rotation
+            
+            SetCardInfo(cardInfos[prevStateId - 1]);
+            setRotation(foodAngles[prevStateId - 1]);
+            SetThemeColor(foodColors[prevStateId - 1]);
+  
+            return plats[prevStateId - 1];
+          }
+        });
+      } else if (param === "iconRigth") {
+        setImage((prevState) => {
+          const prevStateId = plats.indexOf(prevState);
+          console.log("id de l'image précédente", prevStateId);
+  
+          // setRotation(angles[prevStateId]);
+          if (prevStateId === plats.length - 1) {
+            
+  
+            SetCardInfo(cardInfos[0]);
+            setRotation(foodAngles[0]);
+            SetThemeColor(foodColors[0]);
+  
+            return plats[0];
+          } else {
+  
+            SetCardInfo(cardInfos[prevStateId + 1]);
+            setRotation(foodAngles[prevStateId + 1]);
+            SetThemeColor(foodColors[prevStateId + 1]);
+  
+            return plats[prevStateId + 1];
+          }
+        });
+      }
+    
   };
+
+
+  useEffect(() => {
+    setInterval(() => {
+      handleIconClick('iconLeft')
+    }, 4000)
+  }, [])
 
   return (
     <div className="App px-24  text-[#333333] overflow-hidden">
-      <CircleTopRigth rotation={rotate} bgColor={themeColor} />
+      <CircleTopRigth 
+        rotation={rotate} 
+        // bgColor="red"
+        bgColor={themeColor} 
+        showNextText={showNext.showNextText}
+      />
 
       <div className="relative z-10">
         <Navbar />
 
-        <div className="flex space-x-28">
+        <div className="flex">
+
           <FoodCard
-            price={`$${'32'}`}
+            price={cardInfo.price}
+            foodName={cardInfo.foodName}
+            foodDescription={cardInfo.foodDescription}
             color={themeColor}
-            foodName="Green Goddess Chicken Salad"
-            foodDescription="It is a non vegetarian salad which consists of the green goddess dressing mixed with chicken, peppers, olives and celery. "
+            // color="red"
+            showNextText={showNext.showNextText} 
+            icon={showNext.iconClicked}
           />
 
           <CurrentFood
-            buttonColor={`bg-[${themeColor}]`}
+            buttonColor={themeColor}
+            // buttonColor="red"
             imgSource={image}
             handleClick={handleIconClick}
+            showNextText= {showNext.showNextText}
+            icon={showNext.iconClicked}
           />
         </div>
 

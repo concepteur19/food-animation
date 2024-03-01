@@ -1,4 +1,4 @@
-import img1 from "../assets/images/Group4.png"
+import img1 from "../assets/images/Group44.png"
 import logo from "../assets/images/logo.png"
 import sac from "../assets/images/Frame1.png"
 import fleche from "../assets/images/chevron.png"
@@ -13,3 +13,4 @@ import plat3 from "../assets/images/plat3.png"
 export const foodImages = {imageCircle: img1, logo, sac, chevronDown: fleche}
 
 export const plats = [plat1, plat2, plat3 ]
+

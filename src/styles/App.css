@@ -6,3 +6,30 @@
 
   font-family: "Poppins", sans-serif;
 }
+
+
+/* .fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 300ms;
+}
+
+.fadeOut{
+  animation-name: fadeOut;
+  animation-duration: 300ms;
+}
+
+@keyframes fadeOut {
+  0%{
+    opacity: 100;
+    scale: 100;
+    rotate: 0deg;
+  }
+
+    100%{
+      opacity: 0;
+      scale: 0;
+      rotate: 45deg;
+    }
+
+    
+} */

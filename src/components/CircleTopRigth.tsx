@@ -4,18 +4,22 @@ import "../styles/circleFood.css";
 
 type CircleProps = {
   bgColor: string;
-  rotation: number;
+  rotation: string;
+  showNextText: boolean
 };
 
-const CircleTopRigth = ({ bgColor, rotation }: CircleProps) => {
+const CircleTopRigth = ({ bgColor, rotation, showNextText }: CircleProps) => {
+
   return (
     <div
-      className={`fixed top-[-665px] left-[283px] w-[1177px] h-[1177px] rounded-full overflow-hidden bg-[${bgColor}] bg-opacity-[18%]`}
+      className={`fixed top-[-665px] left-[283px] w-[1177px] h-[1177px] rounded-full overflow-hidden ${bgColor} bg-opacity-[18%]`}
     >
       <img
         src={foodImages.imageCircle}
         alt=""
-        className={`mt-[825px] ml-[220px] rotate-[-${rotation}deg]`}
+        className={`mt-[845px] ml-[256px] ${rotation} duration-1000 transition-all ${
+          showNextText ? " opacity-95" : " opacity-100"
+        }`}
       ></img>
       {/* <div className=" circle-food"></div> */}
     </div>

@@ -18,6 +18,6 @@
         "@/*": ["./*"]
       }
     },
-    "include": ["**/*.ts", "**/*.tsx", "src/index.jsx", "src/Data/foodImages.js"],
+    "include": ["**/*.ts", "**/*.tsx", "src/index.jsx", "src/Data/foodImages.js", "src/Data/foodData.ts"],
     "exclude": ["node_modules"]
   }
